@@ -7,14 +7,28 @@ const myMsg = mydata();
 // console.log(myMsg);
 
 const msg = "Welcome to Node programing!!";
-console.log(chalk.cyanBright(msg));
+console.log(chalk.cyanBright.bgGreen(msg));
 
 // handle add paraemter
 yargs.command({
   command: "add",
   describe: "Add a new note",
-  handler: function() {
+  builder: {
+    title: {
+      describe: "Title of the note should be given with this param",
+      demandOption: true,
+      type: "string"
+    },
+    body: {
+      describe: "Body or content of the note should be given with this param",
+      demandOption: true,
+      type: "string"
+    }
+  },
+  handler: function(argv) {
     console.log("Inside add function for notes");
+    console.log(chalk.bgGray("Title is : " + argv.title));
+    console.log(chalk.white("Body of note is: " + argv.body));
   }
 });
 
@@ -45,6 +59,7 @@ yargs.command({
   }
 });
 
-console.log(yargs.argv);
+// console.log(yargs.argv);
+yargs.parse();
 
 console.log(chalk.bgRed.bold("End of the program ...."));
